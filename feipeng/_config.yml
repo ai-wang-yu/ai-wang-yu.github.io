@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 飞蓬
 subtitle: ''
-description: ''
+description: Things change, roll with it
 keywords:
-author: John Doe
-language: en
-timezone: ''
+author: 飞蓬
+language: zh-Hans
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -114,5 +114,5 @@ feed:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/ai-wang-yu/feipeng.github.io.git
+  repo: https://github.com/ai-wang-yu/ai-wang-yu.github.io.git
   branch: master
