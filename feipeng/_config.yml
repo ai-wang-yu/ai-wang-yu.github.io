@@ -103,5 +103,5 @@ theme: ayer
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/ai-wang-yu/ai-wang-yu.github.io.git
+  repo: git@gitee.com:ai-wang-yu/ai-wang-yu.git
   branch: master
