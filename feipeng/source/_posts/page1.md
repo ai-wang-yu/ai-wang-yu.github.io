@@ -2,9 +2,8 @@
 title: Vue项目中后端返回数字（code），前端显示中文（name）
 date: 2020-06-21 23:28:58
 tags:
-    - Vue
     - Array
-categories: Vue
+categories: Array
 # no_toc: true
 ---
 
@@ -24,7 +23,7 @@ arr: [
 ```
 后端返回一个值fruit: "0103"，页面上的showChinese这个值需要显示对应的中文
 
-## 解决方法
+### 解决方法
 
 直接上代码
 
@@ -43,7 +42,7 @@ this.arr.forEach(e=>{
     e.code===this.fruit?this.showChinese = e.name:''
 })
 ```
-## 发现问题
+### 发现问题
 
 ``` js
 this.arr.forEach(e=>{
@@ -52,7 +51,7 @@ this.arr.forEach(e=>{
 })
 ```
 
-## 打印结果
+### 打印结果
 
 ``` json
 苹果 e.name
@@ -96,7 +95,7 @@ for (let key of this.arr) {
 
 具体区别，可以查看[for/for in/for of/forEach/map/filter/some/every区别对比](https://juejin.im/post/5bc98082e51d450e4369bace)
 
-## 推荐的写法
+### 推荐的写法
 
 try，catch写法个人感觉比较麻烦，下面是比较推荐的写法
 
@@ -106,7 +105,7 @@ this.arr.some(e=>{
 })
 ```
 
-## 思考
+### 思考
 
 一般业务中这种情况都是通过select双向绑定来实现，但是作者遇到一种业务场景，后端传值code，前端需要显示，我这里用的自定义组件selsect来回显的，这个时候又要给这个元素的父类加一个点击事件，我发现呢，点击其他区域是可以触发click事件，但是自定义的select组件无法触发父类元素绑定的click事件，所以我用了some函数。后面我度娘发现可以写一个[filter](https://cn.vuejs.org/v2/api/#Vue-filter)函数，适合项目比较大有多个地方需要回显中文的情况。
 有别的更好的方法，欢迎留言评论。
