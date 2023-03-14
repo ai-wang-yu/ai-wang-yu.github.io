@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">155</span>
+            <span class="post-count">1.7k</span>
         </span>
     </span>
 
@@ -97,7 +97,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">6 min</span>
         </span>
     </span>
 </div>
@@ -112,7 +112,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在浏览器地址栏输入网址，如：<a href="http://www.baidu.com后浏览器是怎么把最终的页面呈现出来的呢？">www.baidu.com后浏览器是怎么把最终的页面呈现出来的呢？</a></p>
+  <p>在浏览器地址栏输入网址，如：<a target="_blank" rel="noopener" href="https://www.baidu.com/">www.baidu.com</a>后浏览器是怎么把最终的页面呈现出来的呢？</p>
 <span id="more"></span>
 
 <ol>
@@ -125,7 +125,79 @@
 <li>渲染页面，构建DOM树</li>
 <li>关闭TCP链接（四次握手）</li>
 </ol>
-<h3 id="一、URL"><a href="#一、URL" class="headerlink" title="一、URL"></a>一、URL</h3><h3 id="二、缓存"><a href="#二、缓存" class="headerlink" title="二、缓存"></a>二、缓存</h3><h3 id="三、DNS解析"><a href="#三、DNS解析" class="headerlink" title="三、DNS解析"></a>三、DNS解析</h3><h3 id="四、TCP链接"><a href="#四、TCP链接" class="headerlink" title="四、TCP链接"></a>四、TCP链接</h3><h3 id="五、发送HTTP请求"><a href="#五、发送HTTP请求" class="headerlink" title="五、发送HTTP请求"></a>五、发送HTTP请求</h3><h3 id="六、浏览器接收响应"><a href="#六、浏览器接收响应" class="headerlink" title="六、浏览器接收响应"></a>六、浏览器接收响应</h3><h3 id="七、页面渲染"><a href="#七、页面渲染" class="headerlink" title="七、页面渲染"></a>七、页面渲染</h3> 
+<h3 id="一、URL"><a href="#一、URL" class="headerlink" title="一、URL"></a>一、URL</h3><p>URL（Uniform Resource Locator），统一资源定位符，用于定位互联网上资源，俗称网址。URL中的所有字符都是<em>ASCII</em>字符集，如果出现非<em>ASCII</em>字符，比如中文，浏览器会进行编码再进行传输</p>
+<p>遵守以下的语法规则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scheme</span>:<span class="comment">//host:port/path/filename</span></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//www.baidu.com:443/img?name=123#anchor</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>scheme（协议）：因特网服务的类型。常见的协议有 http、https、ftp、file。http最常见，https 是进行加密的网络传输。</p>
+</li>
+<li><p>host（主机名，域名，IP）</p>
+</li>
+<li><p>port（端口号）：整数，可选范围0-65535，http默认为80，https默认为443。</p>
+</li>
+<li><p>path（查找路径）：用来表示主机上的一个目录或文件地址。</p>
+</li>
+<li><p>query（查询参数）：用于给<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5?fromModule=lemma_inlink">动态网页</a>（如使用CGI、ISAPI、PHP/JSP/ASP/ASP.NET等技术制作的网页）传递参数，可有多个参数，用“&amp;”符号隔开，每个参数的名和值用“=”符号隔开。</p>
+</li>
+<li><p>fragment（#锚点）：在 URI 的末尾通过 hash mark（#）作为 fragment 的开头，其中 # 不属于 fragment 的值。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.baidu.com/index#wang18</span></span><br><span class="line"><span class="number">1.</span># 有别于 ?，? 后面的查询字符串会被网络请求带上服务器，而 fragment 不会被发送的服务器</span><br><span class="line"><span class="number">2.</span>fragment 的改变不会触发浏览器刷新页面，但是会生成浏览历史</span><br><span class="line"><span class="number">3.</span>fragment 会被浏览器根据文件媒体类型（MIME type）进行对应的处理</span><br><span class="line"><span class="number">4.</span>Google 的搜索引擎会忽略 # 及其后面的字符串。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">针对<span class="number">1</span>，<span class="number">2</span>条特性，用于单页面应用跳转页面，修改 location.<span class="property">hash</span> 值，触发 hashchange 事件，<span class="variable constant_">JS</span> 处理对应的逻辑，改变页面 <span class="variable constant_">UI</span> 实现页面的跳转，并在浏览器中产生历史记录。</span><br><span class="line"><span class="variable constant_">HTML</span>锚点，页面中寻找wang18这个锚点，并将页面滚动到该锚点的位置， <span class="variable constant_">URI</span> 中是空的 fragment，则浏览器默认显示页面的最顶端。</span><br><span class="line">fragment 会被 <span class="title class_">Google</span> 搜索引擎忽略掉，不利于<span class="variable constant_">SEO</span>。<span class="title class_">Google</span> 给了一个方案，就是在 # 紧跟一个 ! ，这样<span class="title class_">Google</span> 搜索引擎就会将这个 <span class="variable constant_">URI</span> 进行转换，如<span class="attr">https</span>:<span class="comment">//www.baidu.com/index#wang18转换后就成为了 https://www.baidu.com/index.html?_escaped_fragment_=wang18</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="二、缓存"><a href="#二、缓存" class="headerlink" title="二、缓存"></a>二、缓存</h3><ul>
+<li>浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果以及缓存标识</li>
+<li>浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中</li>
+</ul>
+<p><img src="https://pic.imgdb.cn/item/64108a80ebf10e5d53a39216.png"></p>
+<blockquote>
+<p>强制缓存</p>
+</blockquote>
+<p>强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程</p>
+<ul>
+<li>不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求</li>
+<li>存在该缓存结果和缓存标识，但该结果已失效，强制缓存失效，则使用协商缓存(暂不分析)</li>
+<li>存在该缓存结果和缓存标识，且该结果尚未失效，强制缓存生效，直接返回该结果</li>
+</ul>
+<blockquote>
+<p>强制缓存的缓存规则是什么？</p>
+</blockquote>
+<p>当浏览器向服务器发起请求时，服务器会将缓存规则放入HTTP响应报文的HTTP头中和请求结果一起返回给浏览器，控制强制缓存的字段分别是Expires和Cache-Control，其中Cache-Control优先级比Expires高。</p>
+<p>Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回该请求结果缓存的到期时间，即再次发起该请求时，如果客户端的时间小于Expires的值时，直接使用缓存结果。</p>
+<p>在HTTP/1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为：</p>
+<ul>
+<li>public：所有内容都将被缓存（客户端和代理服务器都可缓存）</li>
+<li>private：所有内容只有客户端可以缓存，Cache-Control的默认取值</li>
+<li>no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定</li>
+<li>no-store：所有内容都不会被缓存，即不使用强制缓存，也不使用协商缓存</li>
+<li>max-age=xxx (xxx is numeric)：缓存内容将在xxx秒后失效</li>
+</ul>
+<blockquote>
+<p>内存缓存和硬盘缓存</p>
+</blockquote>
+<p>内存缓存(from memory cache)和硬盘缓存(from disk cache)，如下:</p>
+<ul>
+<li>内存缓存(from memory cache)：内存缓存具有两个特点，分别是快速读取和时效性：</li>
+<li>快速读取：内存缓存会将编译解析后的文件，直接存入该进程的内存中，占据该进程一定的内存资源，以方便下次运行使用时的快速读取。</li>
+<li>时效性：一旦该进程关闭，则该进程的内存则会清空。</li>
+<li>硬盘缓存(from disk cache)：硬盘缓存则是直接将缓存写入硬盘文件中，读取缓存需要对该缓存存放的硬盘文件进行I/O操作，然后重新解析该缓存内容，读取复杂，速度比内存缓存慢。</li>
+</ul>
+<p>在浏览器中，浏览器会在js和图片等文件解析执行后直接存入内存缓存中，那么当刷新页面时只需直接从内存缓存中读取(from memory cache)；而css文件则会存入硬盘文件中，所以每次渲染页面都需要从硬盘读取缓存(from disk cache)。</p>
+<blockquote>
+<p>协商缓存</p>
+</blockquote>
+<p>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程，主要有以下两种情况：</p>
+<ul>
+<li><p>协商缓存生效，返回304</p>
+</li>
+<li><p>协商缓存失效，返回200和请求结果结果</p>
+</li>
+</ul>
+<blockquote>
+<p>总结</p>
+</blockquote>
+<p>强制缓存优先于协商缓存进行，若强制缓存(Expires和Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回304，继续使用缓存。</p>
+<h3 id="三、DNS解析"><a href="#三、DNS解析" class="headerlink" title="三、DNS解析"></a>三、DNS解析</h3><h3 id="四、TCP链接"><a href="#四、TCP链接" class="headerlink" title="四、TCP链接"></a>四、TCP链接</h3><h3 id="五、发送HTTP请求"><a href="#五、发送HTTP请求" class="headerlink" title="五、发送HTTP请求"></a>五、发送HTTP请求</h3><h3 id="六、浏览器接收响应"><a href="#六、浏览器接收响应" class="headerlink" title="六、浏览器接收响应"></a>六、浏览器接收响应</h3><h3 id="七、页面渲染"><a href="#七、页面渲染" class="headerlink" title="七、页面渲染"></a>七、页面渲染</h3> 
       <!-- reward -->
       
       <div id="reword-out">
@@ -209,9 +281,9 @@
   <nav class="article-nav">
     
     
-      <a href="/2020/07/01/page3/" class="article-nav-link">
+      <a href="/2020/07/21/page5/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">强大的moment.js</div>
+        <div class="article-nav-title">文字排版神器 一分钟了解markdown</div>
       </a>
     
   </nav>
